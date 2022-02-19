@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<robot name="gimbal"
+  xmlns:xacro="http://ros.org/wiki/xacro">
+  
+  <material name="black">
+    <color rgba="0.3 0.3 0.3 1"/>
+  </material>
+
+  <material name="gray">
+    <color rgba="0.75 0.75 0.75 1"/>
+  </material>
+
+  <link name="base_link" />
+
+  <link name="shooter_link" />
+
+  <joint name="shooter_joint" type="fixed">
+    <origin xyz="0 0 0.137" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="shooter_link" />
+  </joint>
+
+  <link name="yaw_link">
+    <inertial>
+      <origin xyz="-0.000440161124103222 -0.00554830803375017 0.0576251210622936" rpy="0 0 0" />
+      <mass value="0.340260642266754" />
+      <inertia ixx="0.000485988657782276" ixy="-3.21626298744617E-06" ixz="-2.12686499290443E-08" iyy="0.000258739468607991" iyz="7.58098449040475E-09" izz="0.000648787387800618" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://pioneer_description/meshes/yaw_link.stl" />
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://pioneer_description/meshes/yaw_link.stl" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="yaw_joint" type="continuous">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="yaw_link" />
+    <axis xyz="0 0 1" />
+  </joint>
+
+  <link name="pitch_link">
+    <inertial>
+      <origin xyz="0.197102069113757 -6.10165821033071E-05 0.0861702556183749" rpy="0 0 0" />
+      <mass value="4.72643918090403" />
+      <inertia ixx="0.0219780624627923" ixy="6.19601096610424E-07" ixz="8.0804936178614E-06" iyy="0.0164504565338211" iyz="2.2936256132429E-06" izz="0.0203544870444026" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://pioneer_description/meshes/pitch_link.stl" />
+      </geometry>
+      <material name="gray"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://pioneer_description/meshes/pitch_link.stl" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="pitch_joint" type="revolute">
+    <origin xyz="0 0 0.137" rpy="0 0 0" />
+    <parent link="yaw_link" />
+    <child link="pitch_link" />
+    <axis xyz="0 1 0" />
+    <limit lower="-0.6" upper="0.5" effort="1.2" velocity="31"/>
+  </joint>
+
+  <link name="camera_base_link" />
+
+  <joint name="camera_base_joint" type="fixed">
+    <origin xyz="0.0715 0 0.0825" rpy="0 0 0" />
+    <parent link="pitch_link" />
+    <child link="camera_base_link" />
+  </joint>
+
+  <xacro:arg name="use_nominal_extrinsics" default="false" />
+  <xacro:include filename="$(find realsense2_description)/urdf/_d455.urdf.xacro" />
+
+  <xacro:sensor_d455 parent="camera_base_link" use_nominal_extrinsics="$(arg use_nominal_extrinsics)">
+    <origin xyz="0 0 0"/>
+  </xacro:sensor_d455>
+
+</robot>
