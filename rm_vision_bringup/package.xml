@@ -1,16 +1,18 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>rm_pioneer_description</name>
+  <name>rm_vision_bringup</name>
   <version>0.0.0</version>
   <description>TODO: Package description</description>
-  <maintainer email="sink.chen@foxmail.com">chenjun</maintainer>
+  <maintainer email="chen.junn@outlook.com">chenjun</maintainer>
   <license>TODO: License declaration</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <exec_depend>launch_ros</exec_depend>
-  <exec_depend>xacro</exec_depend>
+  <depend>mindvision_camera</depend>
+  <depend>rm_auto_aim</depend>
+  <depend>rm_serial_driver</depend>
+  <depend>rm_pioneer_description</depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

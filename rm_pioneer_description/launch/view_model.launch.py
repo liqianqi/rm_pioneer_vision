@@ -8,7 +8,7 @@ from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
     xacro_path = os.path.join(get_package_share_directory(
-        'pioneer_description'), 'urdf', 'gimbal.urdf.xacro')
+        'rm_pioneer_description'), 'urdf', 'gimbal.urdf.xacro')
 
     model_node = Node(
         name='model_node',
@@ -19,7 +19,6 @@ def generate_launch_description():
         parameters=[
             {'robot_description': ParameterValue(
                 Command(['xacro ', str(xacro_path)]), value_type=str)},
-            # {'publish_frequency': 1000.0}
         ],
     )
 
