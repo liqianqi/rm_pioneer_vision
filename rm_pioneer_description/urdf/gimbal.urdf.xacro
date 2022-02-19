@@ -30,14 +30,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://pioneer_description/meshes/yaw_link.stl" />
+        <mesh filename="package://rm_pioneer_description/meshes/yaw_link.stl" />
       </geometry>
       <material name="black"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://pioneer_description/meshes/yaw_link.stl" />
+        <mesh filename="package://rm_pioneer_description/meshes/yaw_link.stl" />
       </geometry>
     </collision>
   </link>
@@ -58,14 +58,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://pioneer_description/meshes/pitch_link.stl" />
+        <mesh filename="package://rm_pioneer_description/meshes/pitch_link.stl" />
       </geometry>
       <material name="gray"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://pioneer_description/meshes/pitch_link.stl" />
+        <mesh filename="package://rm_pioneer_description/meshes/pitch_link.stl" />
       </geometry>
     </collision>
   </link>
