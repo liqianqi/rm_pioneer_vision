@@ -1,30 +1,48 @@
 import os
-from launch import LaunchDescription
-from launch.substitutions import Command
-from launch_ros.actions import Node
-from launch_ros.descriptions import ParameterValue
+
 from ament_index_python.packages import get_package_share_directory
+from launch import LaunchDescription
+from launch.actions import DeclareLaunchArgument
+from launch.substitutions import Command, LaunchConfiguration
+from launch_ros.actions import Node
 
 
 def generate_launch_description():
-    xacro_path = os.path.join(get_package_share_directory(
-        'rm_pioneer_description'), 'urdf', 'gimbal.urdf.xacro')
+    declare_robot_type = DeclareLaunchArgument(
+        name='robot_type', default_value='standard')
 
-    model_node = Node(
-        name='model_node',
+    rviz_config_path = os.path.join(get_package_share_directory(
+        'rm_pioneer_description'), 'launch', 'view_model.rviz')
+
+    urdf_dir = os.path.join(get_package_share_directory(
+        'rm_pioneer_description'), 'urdf/')
+
+    robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
-        namespace='',
-        output='screen',
         parameters=[
-            {'robot_description': ParameterValue(
-                Command(['xacro ', str(xacro_path)]), value_type=str)},
-        ],
+            {'robot_description': Command(
+                ['xacro ', urdf_dir,
+                 LaunchConfiguration('robot_type'), '.urdf.xacro'])}
+        ]
     )
 
-    joint_state_publisher = Node(
-        package='joint_state_publisher',
-        executable='joint_state_publisher',
+    joint_state_publisher_gui = Node(
+        package='joint_state_publisher_gui',
+        executable='joint_state_publisher_gui',
     )
 
-    return LaunchDescription([model_node])
+    rviz2 = Node(
+        package='rviz2',
+        executable='rviz2',
+        name='rviz2',
+        output='screen',
+        arguments=['-d', rviz_config_path],
+    )
+
+    return LaunchDescription([
+        declare_robot_type,
+        robot_state_publisher,
+        joint_state_publisher_gui,
+        rviz2
+    ])
