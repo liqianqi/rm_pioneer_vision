@@ -9,7 +9,7 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
     declare_robot_type = DeclareLaunchArgument(
-        name='robot_type', default_value='standard')
+        name='robot', default_value='standard')
 
     rviz_config_path = os.path.join(get_package_share_directory(
         'rm_pioneer_description'), 'launch', 'view_model.rviz')
@@ -23,7 +23,7 @@ def generate_launch_description():
         parameters=[
             {'robot_description': Command(
                 ['xacro ', urdf_dir,
-                 LaunchConfiguration('robot_type'), '.urdf.xacro'])}
+                 LaunchConfiguration('robot'), '.urdf.xacro'])}
         ]
     )
 

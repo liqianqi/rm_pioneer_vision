@@ -3,15 +3,15 @@ import os
 from ament_index_python.packages import get_package_share_directory
 
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-
-from launch.substitutions import Command
+from launch.substitutions import Command, LaunchConfiguration
 from launch_ros.actions import Node
-from launch_ros.descriptions import ParameterValue
 
 
 def generate_launch_description():
+    declare_robot_type = DeclareLaunchArgument(
+        name='robot', default_value='standard')
 
     mv_camera_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -28,22 +28,21 @@ def generate_launch_description():
             os.path.join(
                 get_package_share_directory('rm_serial_driver'), 'launch', 'serial_driver.launch.py')))
 
-    xacro_path = os.path.join(get_package_share_directory(
-        'rm_pioneer_description'), 'urdf', 'gimbal.urdf.xacro')
+    urdf_dir = os.path.join(get_package_share_directory(
+        'rm_pioneer_description'), 'urdf/')
 
     robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
-        namespace='',
-        output='screen',
         parameters=[
-            {'robot_description': ParameterValue(
-                Command(['xacro ', str(xacro_path)]), value_type=str)},
-            {'publish_frequency': 1000.0}
-        ],
+            {'robot_description': Command(
+                ['xacro ', urdf_dir,
+                 LaunchConfiguration('robot'), '.urdf.xacro'])}
+        ]
     )
 
     return LaunchDescription([
+        declare_robot_type,
         mv_camera_launch,
         rm_auto_aim_launch,
         rm_serial_launch,
