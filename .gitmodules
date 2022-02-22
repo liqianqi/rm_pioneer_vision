@@ -1,9 +1,6 @@
 [submodule "rm_auto_aim"]
 	path = rm_auto_aim
 	url = https://github.com/chenjunnn/rm_auto_aim
-[submodule "rm_serial_driver"]
-	path = rm_serial_driver
-	url = https://github.com/chenjunnn/rm_serial_driver
 [submodule "ros2_mindvision_camera"]
 	path = ros2_mindvision_camera
 	url = https://github.com/chenjunnn/ros2_mindvision_camera
