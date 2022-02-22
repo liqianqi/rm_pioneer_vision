@@ -1,0 +1,44 @@
+/mv_camera:
+  ros__parameters:
+    camera_name: mv_camera
+
+    analog_gain: 10
+    exposure_time: 5000
+
+    rgb_gain:
+      b: 110
+      g: 100
+      r: 110
+
+    saturation: 100
+    gamma: 100
+
+
+/armor_detector:
+  ros__parameters:
+    use_depth: false
+    subscribe_compressed: false
+
+    preprocess:
+      b:
+        hmin: 75
+        hmax: 120
+        lmin: 170
+        smin: 100
+      r:
+        hmin: 150
+        hmax: 25
+        lmin: 175
+        smin: 100
+      morph_size: 5      
+
+    light:
+      max_angle: 40.0
+      max_ratio: 0.55
+      min_ratio: 0.1
+
+    armor:
+      max_angle: 35.0
+      max_center_ratio: 1.6
+      min_center_ratio: 0.4
+      min_light_ratio: 0.6
