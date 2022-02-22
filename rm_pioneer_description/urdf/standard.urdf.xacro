@@ -13,14 +13,6 @@
 
   <link name="base_link" />
 
-  <link name="shooter_link" />
-
-  <joint name="shooter_joint" type="fixed">
-    <origin xyz="0 0 0.137" rpy="0 0 0" />
-    <parent link="base_link" />
-    <child link="shooter_link" />
-  </joint>
-
   <link name="yaw_link">
     <inertial>
       <origin xyz="-0.000440161124103222 -0.00554830803375017 0.0576251210622936" rpy="0 0 0" />
@@ -76,6 +68,14 @@
     <child link="pitch_link" />
     <axis xyz="0 1 0" />
     <limit lower="-0.6" upper="0.5" effort="1.2" velocity="31"/>
+  </joint>
+
+  <link name="shooter_link" />
+
+  <joint name="shooter_joint" type="fixed">
+    <origin xyz="0 0 0.137" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="shooter_link" />
   </joint>
 
   <link name="camera_base_link" />
