@@ -43,10 +43,14 @@ RUN . /opt/ros/galactic/setup.sh && \
     --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
     --symlink-install
 
-RUN echo "source /opt/intel/openvino_2021/bin/setupvars.sh && source /ros_ws/install/setup.zsh" >> ~/.zshrc
+RUN echo \
+    $'source /opt/intel/openvino_2021/bin/setupvars.sh \n\
+    source /ros_ws/install/setup.zsh \n\
+    eval "$(register-python-argcomplete3 ros2)" \n\
+    eval "$(register-python-argcomplete3 colcon)"' >> ~/.zshrc
 
-ENV robot=guard debug=true
+ENV ROBOT=guard DEBUG=true
 
-# setup entrypoint
-COPY ./entrypoint.sh /
-ENTRYPOINT [ "/entrypoint.sh" ]
+CMD [ "/bin/zsh", "-c", "source /ros_ws/install/setup.zsh && \
+    source /opt/intel/openvino_2021/bin/setupvars.sh && \
+    ros2 launch rm_vision_bringup vision_bringup.launch.py robot:=${ROBOT}" ]
