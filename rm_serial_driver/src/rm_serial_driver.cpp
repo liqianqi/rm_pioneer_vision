@@ -3,10 +3,7 @@
 
 #include "rm_serial_driver/rm_serial_driver.hpp"
 
-#include <sys/types.h>
-
 // ROS
-#include <functional>
 #include <rclcpp/logging.hpp>
 #include <rclcpp/qos.hpp>
 #include <rclcpp/utilities.hpp>
@@ -14,6 +11,7 @@
 
 // C++ system
 #include <cstdint>
+#include <functional>
 #include <memory>
 #include <string>
 #include <vector>
@@ -63,7 +61,7 @@ RMSerialDriver::~RMSerialDriver()
   if (serial_driver_->port()->is_open()) {
     serial_driver_->port()->close();
   }
-  
+
   if (owned_ctx_) {
     owned_ctx_->waitForExit();
   }

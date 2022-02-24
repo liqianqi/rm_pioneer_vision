@@ -31,7 +31,8 @@ def generate_launch_description():
     mv_camera_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(
-                get_package_share_directory('mindvision_camera'), 'launch', 'mv_launch.py')),
+                get_package_share_directory('mindvision_camera'),
+                'launch', 'mv_launch.py')),
         launch_arguments={'params_file': params_file,
                           'camera_info_url': camera_info_url,
                           'use_sensor_data_qos': 'true'}.items())
@@ -39,14 +40,16 @@ def generate_launch_description():
     rm_auto_aim_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(
-                get_package_share_directory('rm_auto_aim'), 'launch', 'auto_aim.launch.py')),
+                get_package_share_directory('rm_auto_aim'),
+                'launch', 'auto_aim.launch.py')),
         launch_arguments={'detector_params_file': params_file,
                           'debug': 'true'}.items())
 
     rm_serial_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(
-                get_package_share_directory('rm_serial_driver'), 'launch', 'serial_driver.launch.py')))
+                get_package_share_directory('rm_serial_driver'),
+                'launch', 'serial_driver.launch.py')))
 
     robot_state_publisher = Node(
         package='robot_state_publisher',
