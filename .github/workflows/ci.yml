@@ -1,0 +1,49 @@
+name: Build and Test (Galactic)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup ROS 2
+        uses: ros-tooling/setup-ros@v0.2
+        with:
+          required-ros-distributions: galactic
+
+      - name: Build rm_pioneer_vision and run tests
+        uses: ros-tooling/action-ros-ci@v0.2
+        with:
+          package-name: rm_pioneer_vision rm_pioneer_description rm_serial_driver
+          import-token: ${{ secrets.GITHUB_TOKEN }}
+          target-ros2-distro: galactic
+
+  build-and-push-image:
+    needs: build-and-test
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: chenjunnn/rm_pioneer_vision:latest
