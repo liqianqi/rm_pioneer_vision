@@ -29,22 +29,37 @@
     docker pull ghcr.io/chenjunnn/rm_pioneer_vision:latest
     ```
 
-4. 安装 [rocker](https://github.com/osrf/rocker) 用于运行GUI程序 (Optional)
+4. 运行视觉代码
+  
+    ```bash
+    docker run --name vision --privileged --network=host \
+    ghcr.io/chenjunnn/rm_pioneer_vision:latest
+    ```
+
+    如果不希望容器一启动就运行程序，可以在命令的最后加上`zsh`替代默认指令，进入zsh shell
+
+5. 使用`exec`命令进入容器
+
+    ```bash
+    docker exec -it vision zsh
+    ```
+
+6. 设置开机自启
+
+    ```bash
+    sudo systemctl enable docker.service
+    sudo systemctl enable containerd.service
+    docker update --restart always vision
+    ```
+
+7. 安装 [rocker](https://github.com/osrf/rocker) 用于运行GUI程序 (Optional)
 
     ```bash
     sudo apt install python3-rocker
     ```
 
-5. 运行视觉代码
-  
+    - 启动rviz2
     ```bash
-    rocker --x11 --devices /dev/dri/card0 --nocleanup \
-        --name vision --privileged --net=host \
-        ghcr.io/chenjunnn/rm_pioneer_vision:latest
-    ```
-
-6. 使用`exec`命令进入容器
-
-    ```bash
-    docker exec -it vision zsh
+    rocker --x11 --devices /dev/dri/card0 \
+    ghcr.io/chenjunnn/rm_pioneer_vision:latest rviz2
     ```

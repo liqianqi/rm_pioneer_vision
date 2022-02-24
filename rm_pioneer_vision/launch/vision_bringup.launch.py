@@ -43,7 +43,7 @@ def generate_launch_description():
                 get_package_share_directory('rm_auto_aim'),
                 'launch', 'auto_aim.launch.py')),
         launch_arguments={'detector_params_file': params_file,
-                          'debug': 'true'}.items())
+                          'debug': 'false'}.items())
 
     rm_serial_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
