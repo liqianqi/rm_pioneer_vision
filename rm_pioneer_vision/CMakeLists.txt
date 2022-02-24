@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(rm_vision_bringup)
+project(rm_pioneer_vision)
 
 find_package(ament_cmake_auto REQUIRED)
 

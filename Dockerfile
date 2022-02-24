@@ -53,4 +53,4 @@ ENV ROBOT=guard DEBUG=true
 
 CMD [ "/bin/zsh", "-c", "source /ros_ws/install/setup.zsh && \
     source /opt/intel/openvino_2021/bin/setupvars.sh && \
-    ros2 launch rm_vision_bringup vision_bringup.launch.py robot:=${ROBOT}" ]
+    ros2 launch rm_pioneer_vision vision_bringup.launch.py robot:=${ROBOT}" ]
