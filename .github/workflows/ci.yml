@@ -19,7 +19,7 @@ jobs:
         uses: ros-tooling/action-ros-ci@v0.2
         with:
           package-name: rm_pioneer_vision rm_pioneer_description rm_serial_driver
-          import-token: ${{ secrets.GITHUB_TOKEN }}
+          import-token: ${{ secrets.PAT }}
           target-ros2-distro: galactic
 
   build-and-push-image:
@@ -33,6 +33,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          submodules: true
+          token: ${{ secrets.PAT }}
 
       - name: Log in to the Container registry
         uses: docker/login-action@v1
