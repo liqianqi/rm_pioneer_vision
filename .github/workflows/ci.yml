@@ -1,4 +1,4 @@
-name: Build and Test (Galactic)
+name: PIONEER Vision CI
 
 on:
   push:
@@ -40,7 +40,7 @@ jobs:
       - name: Log in to the Container registry
         uses: docker/login-action@v1
         with:
-          registry: ${{ env.REGISTRY }}
+          registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
@@ -49,4 +49,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: chenjunnn/rm_pioneer_vision:latest
+          tags: ghcr.io/chenjunnn/rm_pioneer_vision:latest
